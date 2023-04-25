@@ -8,6 +8,10 @@ export const App = () => {
 
   const [text, setText] = useState("")
 
+  const handleDelete = (value) =>{
+    setTask(task.filter((item) => item !== value))
+  }
+
   const handleChange = (e) =>{
      setText(e.target.value)
   }
@@ -37,7 +41,7 @@ export const App = () => {
       handleChange={handleChange}
       task={task}
       text={text}
-      setTask={setTask}/>
+      handleDelete={handleDelete}/>
     </Stack>
   )
 }

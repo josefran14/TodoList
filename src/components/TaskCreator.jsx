@@ -7,23 +7,17 @@ export const TaskCreator = ({
   handleSubmit,
   task,
   text,
-  setTask,
+  handleDelete
 }) => {
   const [completedTodos, setCompletedTodos] = useState([]);
 
-  const handleClick = (value) => {
-    setTask(task.filter((item) => item !== value));
-  };
-
-  function handleToggle(todo) {
+  const handleToggle = (todo) =>{
     if (completedTodos.includes(todo)) {
       setCompletedTodos(completedTodos.filter((item) => item !== todo));
     } else {
       setCompletedTodos([...completedTodos, todo]);
     }
   }
-
-  // Estado con el valor de los indice de los checkbox
 
   return (
     <Box sx={{display: "flex", justifyContent: "center", backgroundImage: "url(https://as1.ftcdn.net/v2/jpg/00/61/20/06/1000_F_61200666_AVRvNzEvYTJC2am6bX0lZAWUE1tcGlwH.jpg)", width: "80%", minHeight: "300px", padding: "10px",}}>
@@ -56,32 +50,13 @@ export const TaskCreator = ({
               {" "}
               {item}{" "}
             </Typography>{" "}
-            <Button onClick={() => handleClick(item)} color="error">
+            <Button onClick={() => handleDelete(item)} color="error">
               {" "}
               <HighlightOffIcon />{" "}
             </Button>
           </Box>
         ))}
       </form>
-
-      {/* <ul>
-        {tasks.map((item) => (
-          <li
-            key={item}
-            style={{
-              textDecoration: completedTodos.includes(item)
-                ? "line-through"
-                : "none",
-            }}
-          >
-            {item} <button onClick={() => console.log("eliminar")}>XXX</button>
-            <input
-              type="checkbox"
-               onChange={() => handleToggle(item)}
-            />
-          </li>
-        ))}
-</ul> */}
     </Box>
   );
 };
