@@ -1,28 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const useTask = () => {
     
     const [task, setTask] = useState([])
   
     const [completedTodos, setCompletedTodos] = useState([]);
+
+    useEffect(() => {
+      let data = localStorage.getItem("tasks")
+       if(data) {
+        setTask(JSON.parse(data)) 
+       }
+    }, [])
   
-    const [text, setText] = useState("")
+    useEffect(() => {
+      localStorage.setItem("tasks", JSON.stringify(task))
+    }, [task]);
 
     const handleDelete = (value) =>{
         setTask(task.filter((item) => item !== value))
       }
 
-    const handleChange = (e) =>{
-        setText(e.target.value)
-     }
-   
-     const handleSubmit = (e) =>{
-        e.preventDefault()
-        if(text.trim().length <= 2) return
-        setTask([...task, text])
-        setText("")
-     }
-   
+    const handleAddTask = (newTask) =>{
+      setTask([...task, newTask])
+    }
    
      const handleToggle = (todo) =>{
        if (completedTodos.includes(todo)) {
@@ -34,12 +35,9 @@ export const useTask = () => {
 
      return {
         task: task,
-        text: text,
         completedTodos: completedTodos,
-        setTask: setTask,
         handleDelete: handleDelete,
-        handleChange: handleChange,
-        handleSubmit: handleSubmit,
+        handleAddTask: handleAddTask,
         handleToggle: handleToggle
      }
 }
