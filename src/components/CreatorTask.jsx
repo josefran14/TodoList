@@ -1,39 +1,43 @@
-import { Box, Button, TextField } from "@mui/material"
-import { useState } from "react"
+import { Box, Button, TextField } from "@mui/material";
+import { useState } from "react";
 
-export const CreatorTask = ({handleAddTask}) => {
+export const CreatorTask = ({ handleAddTask }) => {
+  const [text, setText] = useState("");
 
-  const [text, setText] = useState("")
+  const handleChange = (e) => {
+    setText(e.target.value);
+  };
 
-  const handleChange = (e) =>{
-    setText(e.target.value)
- }
-
- const handleSubmit = (e) =>{
-    e.preventDefault()
-    if(text.trim().length <= 2) return
-    handleAddTask(text)
-    setText("")
- }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (text.trim().length <= 2) return;
+    const newTask = {
+      id: new Date().getTime(),
+      todo: text,
+      done: false,
+    };
+    handleAddTask(newTask);
+    setText("");
+  };
 
   return (
-    <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <form onSubmit={handleSubmit}>
-
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        
+      }}
+    >
+      <form onSubmit={handleSubmit}>
         <TextField
-          sx={{backgroundColor: "#b3b3b3"}}
           onChange={handleChange}
           type="text"
-          variant="standard"
-          placeholder="Ingrese una tarea"
+          label="New Task"
+          placeholder="Enter a task"
           value={text}
         />
-
-        <Button onClick={handleSubmit} variant="contained" sx={{marginLeft: "20px"}}>
-          Add
-        </Button>
-
-        </form>
+      </form>
     </Box>
-  )
-}
+  );
+};
